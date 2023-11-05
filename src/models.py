@@ -28,3 +28,10 @@ class Order(Base):
                         nullable=False, server_default=func.now())
     finish_time = Column(TIMESTAMP(timezone=True),
                          default=None, onupdate=func.now())
+
+class CourierRegion(Base):
+    __tablename__ = 'courier_region'
+    __table_args__ = {'extend_existing': True}
+    id = Column(Integer, autoincrement=True, primary_key=True, nullable=False)
+    courier_id = Column(ForeignKey('couriers.id'), primary_key=True)
+    region_id = Column(ForeignKey('regions.id'), primary_key=True)

@@ -8,7 +8,7 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(courier.router, tags=['API курьер'], prefix='/courier')
-# app.include_router(courier.order, tags=['API заказ'], prefix='/order')
+app.include_router(order.router, tags=['API заказ'], prefix='/order')
 
 
 @app.get("/")

@@ -10,6 +10,11 @@ class Courier(BaseModel):
     class Config:
         allow_population_by_field_name = True
 
+class Order(BaseModel):
+    courier_id: int
+    region_id: int
+    order_name: str
+
 
 class CourierRegistration(BaseModel):
     courier_name: str
@@ -19,16 +24,11 @@ class CourierRegistration(BaseModel):
         allow_population_by_field_name = True
 
 
+class OrderRegistration(BaseModel):
+    order_name: str
+    order_district: str
+
+
 class PostOrder(BaseModel):
     name: str
     district: str
-
-
-class CourierRegion(BaseModel):
-    courier_id: int
-    region_id: int
-
-
-class OrderRegion(BaseModel):
-    order_id: int
-    region_id: int
