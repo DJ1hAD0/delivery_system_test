@@ -25,11 +25,11 @@ def registrate_order(payload: schemas.OrderRegistration, db: Session = Depends(g
     region_id = db.query(models.Region.id).filter(models.Region.region_name == payload.order_district).all()
     if len(region_id) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Region not found")
-    buzy_couriers = [courier_id[0] for courier_id in
+    busy_couriers = [courier_id[0] for courier_id in
                      db.query(models.Order.courier_id).filter(models.Order.finish_time.is_(None)).all()]
     all_couriers_has_region = [courier_id[0] for courier_id in db.query(models.Courier.id).join(models.CourierRegion).join(models.Region).filter(
         models.Region.region_name == payload.order_district).all()]
-    free_couriers_in_region = list(filter(lambda item: item not in buzy_couriers, all_couriers_has_region))
+    free_couriers_in_region = list(filter(lambda item: item not in busy_couriers, all_couriers_has_region))
     if len(free_couriers_in_region) == 0:
         return {"message": "There are no free couriers in this region"}
     random_free_courier_id = random.choice(free_couriers_in_region)
@@ -73,8 +73,8 @@ def finish_order(id: int, db: Session = Depends(get_db)) -> dict:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Order not found")
     if order[0][1] is not None:
         return {"message": "Order is already closed"}
-    update_statement = update(models.Order).where(models.Order.id == id).values({'finish_time': func.now()})
-    db.execute(update_statement)
+    finish_time_update = update(models.Order).where(models.Order.id == id).values({'finish_time': func.now()})
+    db.execute(finish_time_update)
     db.commit()
     return {'message': f"Order with id {id} has been closed"}
 
