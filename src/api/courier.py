@@ -1,6 +1,3 @@
-from dataclasses import fields
-from datetime import datetime
-
 from src import schemas, models
 from sqlalchemy.orm import Session
 from fastapi import Depends, HTTPException, status, APIRouter, Response
@@ -31,7 +28,7 @@ def registrate_courier(payload: schemas.CourierRegistration, db: Session = Depen
 
 
 @router.get('/{id}')
-def get_courier(id: int, db: Session = Depends(get_db)):
+def get_courier_info(id: int, db: Session = Depends(get_db)):
     courier = db.query(models.Courier).filter(models.Courier.id == id).all()
     if len(courier) == 0:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Courier not found")
