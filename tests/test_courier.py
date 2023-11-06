@@ -4,6 +4,21 @@ from src.main import app
 
 client = TestClient(app)
 
+def test_registrate_courier():
+    response = client.post(
+        "/courier/", headers={},
+        json={
+            "courier_name": "Сергей",
+            "districts": [
+                "Железнодорожный",
+                "Октябрьский"
+            ]
+        },
+    )
+    assert response.status_code == 200
+    assert response.json() == {
+        "message": "courier Сергей successfully registered"
+    }
 
 def test_get_all_couriers():
     response = client.get("/courier/", headers={})
@@ -39,18 +54,4 @@ def test_get_courier_info():
     }
 
 
-def test_registrate_courier():
-    response = client.post(
-        "/courier/", headers={},
-        json={
-            "courier_name": "Сергей",
-            "districts": [
-                "Железнодорожный",
-                "Октябрьский"
-            ]
-        },
-    )
-    assert response.status_code == 200
-    assert response.json() == {
-        "message": "courier Сергей successfully registered"
-    }
+
