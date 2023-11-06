@@ -13,8 +13,7 @@ COPY *.sh /docker-entrypoint-initdb.d/
 
 COPY . .
 
-WORKDIR /src
+RUN chmod a+x *.sh
 
-CMD gunicorn main:app --bind=0.0.0.0:8000
 
 

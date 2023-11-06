@@ -4,7 +4,7 @@
 и выполнить последовательно следующие команды:
 
 <pre>
-sudo docker compose build
+sudo docker-compose build
 </pre>
 <pre>
 sudo docker-compose up -d
