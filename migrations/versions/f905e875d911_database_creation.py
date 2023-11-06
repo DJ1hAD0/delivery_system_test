@@ -26,10 +26,6 @@ def upgrade() -> None:
                                sa.Column('courier_name', sa.String(), nullable=False, comment='Имя курьера'),
                                sa.PrimaryKeyConstraint('id')
                                )
-    conn.execute(couriers.insert().values({'id': 1, 'courier_name': 'Пётр'}))
-    conn.commit()
-    op.execute('INSERT INTO couriers (id, courier_name) VALUES (2, \'Василий\')')
-    op.execute('INSERT INTO couriers (id, courier_name) VALUES (3, \'Егор\')')
     op.create_table_comment('couriers', 'Таблица курьеров')
     op.create_table('regions',
                     sa.Column('id', sa.Integer(), autoincrement=True, nullable=False, unique=True,
