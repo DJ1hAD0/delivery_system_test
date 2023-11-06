@@ -10,4 +10,4 @@ sudo docker compose build
 sudo docker-compose up -d
 </pre>
 
-Приложение будет доступно по host-ip>:9999
+Приложение будет доступно по host-ip:9999
