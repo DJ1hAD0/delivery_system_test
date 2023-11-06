@@ -37,10 +37,3 @@ class CourierRegion(Base):
     courier_id = Column(ForeignKey('couriers.id'), primary_key=True)
     region_id = Column(ForeignKey('regions.id'), primary_key=True)
 
-
-class OrderRegion(Base):
-    __tablename__ = 'order_region'
-    __table_args__ = {'extend_existing': True}
-    id = Column(Integer, autoincrement=True, primary_key=True, nullable=False, unique=True)
-    order_id = Column(ForeignKey('orders.id'), primary_key=True)
-    region_id = Column(ForeignKey('regions.id'), primary_key=True)

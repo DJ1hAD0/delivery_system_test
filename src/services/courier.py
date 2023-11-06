@@ -8,7 +8,7 @@ router = APIRouter()
 
 
 @router.get('/')
-def get_all_couriers(db: Session = Depends(get_db)) -> list:
+def get_all_couriers(db: Session = Depends(get_db)):
     """
     Возвращает список всех зарегистрированных в системе курьеров
     эквивалентно запросу SELECT * FROM courires
@@ -17,7 +17,7 @@ def get_all_couriers(db: Session = Depends(get_db)) -> list:
     return result
 
 @router.post('/')
-def registrate_courier(payload: schemas.CourierRegistration, db: Session = Depends(get_db)) -> dict:
+def registrate_courier(payload: schemas.CourierRegistration, db: Session = Depends(get_db)):
     """
     Регистрация курьера в системе
     :param payload: словарь, содержащий следующие поля: courier_name: str - имя курьера, districts: list[str] - список наименований районов
@@ -33,14 +33,14 @@ def registrate_courier(payload: schemas.CourierRegistration, db: Session = Depen
         region_id = db.query(models.Region.id).filter(models.Region.region_name == district).all()
         if len(region_id) == 0:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=f"Region {district} not found")
-        courier_region = models.CourierRegion(courier_id=new_courier.id, region_id=region_id[0])
+        courier_region = models.CourierRegion(courier_id=new_courier.id, region_id=region_id[0][0])
         db.add(courier_region)
     db.commit()
     return {"message": f"courier {new_courier.courier_name} successfully registered"}
 
 
 @router.get('/{id}')
-def get_courier_info(id: int, db: Session = Depends(get_db)) -> dict:
+def get_courier_info(id: int, db: Session = Depends(get_db)):
     """
     Получение информации о курьере
     :param id: уникальный идентификатор курьера

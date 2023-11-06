@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post('/')
-def registrate_order(payload: schemas.OrderRegistration, db: Session = Depends(get_db)) -> dict:
+def registrate_order(payload: schemas.OrderRegistration, db: Session = Depends(get_db)):
     """
     Регистрация заказа в системе
     :param payload: словарь, содержащий поля order_name: str - наименование (текст) заказа, order_district: str - наименование района
@@ -37,13 +37,11 @@ def registrate_order(payload: schemas.OrderRegistration, db: Session = Depends(g
     db.add(new_order)
     db.commit()
     db.refresh(new_order)
-    db.add(models.OrderRegion(order_id=new_order.id, region_id=region_id[0][0]))
-    db.commit()
     return {"order_id": new_order.id, "courier_id": random_free_courier_id}
 
 
 @router.get('/{id}')
-def get_order_info(id: int, db: Session = Depends(get_db)) -> dict:
+def get_order_info(id: int, db: Session = Depends(get_db)):
     """
     Вывод информации о конкретном заказе
     :param id: идентификатор заказа
@@ -59,7 +57,7 @@ def get_order_info(id: int, db: Session = Depends(get_db)) -> dict:
     return {'id': order[0].id, 'status': 1 if order[0].finish_time is None else 2}
 
 @router.post('/{id}')
-def finish_order(id: int, db: Session = Depends(get_db)) -> dict:
+def finish_order(id: int, db: Session = Depends(get_db)):
     """
     Завершение заказа
     :param id: идентификатор заказа, который требуется завершить

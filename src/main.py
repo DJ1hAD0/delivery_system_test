@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from database import engine
-import models
+from src.database import engine
+import src.models
 import uvicorn
-from src.api import courier, order
+from src.services import courier, order
 
-models.Base.metadata.create_all(bind=engine)
+src.models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 app.include_router(courier.router, tags=['API курьера'], prefix='/courier')
