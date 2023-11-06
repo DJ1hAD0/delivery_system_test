@@ -9,6 +9,8 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
+COPY *.sh /docker-entrypoint-initdb.d/
+
 COPY . .
 
 WORKDIR /src
