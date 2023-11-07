@@ -9,7 +9,9 @@ COPY requirements.txt .
 
 RUN pip install -r requirements.txt
 
-COPY *.sh /docker-entrypoint-initdb.d/
+COPY init_conf.sh /docker-entrypoint-initdb.d/
+
+COPY app.sh /fastapi_app/
 
 COPY . .
 
