@@ -2,6 +2,7 @@ version: "3.5"
 services:
   db:
     image: postgres:11
+    restart: always
     container_name: db_app
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb/10-init.sql
